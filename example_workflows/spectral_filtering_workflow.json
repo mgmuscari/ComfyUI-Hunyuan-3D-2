@@ -1,0 +1,836 @@
+{
+  "last_node_id": 16,
+  "last_link_id": 22,
+  "nodes": [
+    {
+      "id": 1,
+      "type": "LoadImage",
+      "pos": [
+        50,
+        50
+      ],
+      "size": {
+        "0": 280,
+        "1": 280
+      },
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            1
+          ],
+          "slot_index": 0
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null,
+          "slot_index": 1
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": [
+        "source_image.png",
+        "image"
+      ],
+      "title": "Source Image"
+    },
+    {
+      "id": 2,
+      "type": "Hunyuan3DPipelineLoader",
+      "pos": [
+        50,
+        370
+      ],
+      "size": {
+        "0": 280,
+        "1": 58
+      },
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "pipeline",
+          "type": "HUNYUAN3D_PIPELINE",
+          "links": [
+            2,
+            10,
+            11,
+            12
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Hunyuan3DPipelineLoader"
+      },
+      "widgets_values": [
+        "tencent/Hunyuan3D-2.1/hunyuan3d-dit-v2-1"
+      ]
+    },
+    {
+      "id": 3,
+      "type": "Hunyuan3DEmbeddingEncode",
+      "pos": [
+        380,
+        50
+      ],
+      "size": {
+        "0": 230,
+        "1": 80
+      },
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 1
+        },
+        {
+          "name": "pipeline",
+          "type": "HUNYUAN3D_PIPELINE",
+          "link": 2
+        },
+        {
+          "name": "mask",
+          "type": "MASK",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "embedding",
+          "type": "EMBEDDING",
+          "links": [
+            3
+          ],
+          "slot_index": 0
+        },
+        {
+          "name": "info",
+          "type": "EMBEDDING_INFO",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Hunyuan3DEmbeddingEncode"
+      },
+      "title": "Encode"
+    },
+    {
+      "id": 4,
+      "type": "Hunyuan3DEmbeddingSpectralDecompose",
+      "pos": [
+        660,
+        50
+      ],
+      "size": {
+        "0": 250,
+        "1": 60
+      },
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "embedding",
+          "type": "EMBEDDING",
+          "link": 3
+        }
+      ],
+      "outputs": [
+        {
+          "name": "spectral",
+          "type": "SPECTRAL_COMPONENTS",
+          "links": [
+            4,
+            5,
+            6
+          ],
+          "slot_index": 0
+        },
+        {
+          "name": "info",
+          "type": "EMBEDDING_INFO",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Hunyuan3DEmbeddingSpectralDecompose"
+      },
+      "title": "Spectral Decompose (SVD)"
+    },
+    {
+      "id": 5,
+      "type": "Hunyuan3DEmbeddingSpectralFilter",
+      "pos": [
+        960,
+        50
+      ],
+      "size": {
+        "0": 250,
+        "1": 130
+      },
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "spectral",
+          "type": "SPECTRAL_COMPONENTS",
+          "link": 4
+        }
+      ],
+      "outputs": [
+        {
+          "name": "filtered",
+          "type": "SPECTRAL_COMPONENTS",
+          "links": [
+            7
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Hunyuan3DEmbeddingSpectralFilter"
+      },
+      "widgets_values": [
+        "high",
+        0.3,
+        0.8,
+        10.0
+      ],
+      "title": "HIGH-PASS (Structure Only)"
+    },
+    {
+      "id": 6,
+      "type": "Hunyuan3DEmbeddingSpectralFilter",
+      "pos": [
+        960,
+        230
+      ],
+      "size": {
+        "0": 250,
+        "1": 130
+      },
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "spectral",
+          "type": "SPECTRAL_COMPONENTS",
+          "link": 5
+        }
+      ],
+      "outputs": [
+        {
+          "name": "filtered",
+          "type": "SPECTRAL_COMPONENTS",
+          "links": [
+            8
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Hunyuan3DEmbeddingSpectralFilter"
+      },
+      "widgets_values": [
+        "low",
+        0.3,
+        0.8,
+        10.0
+      ],
+      "title": "LOW-PASS (Detail Only)"
+    },
+    {
+      "id": 7,
+      "type": "Hunyuan3DEmbeddingSpectralFilter",
+      "pos": [
+        960,
+        410
+      ],
+      "size": {
+        "0": 250,
+        "1": 130
+      },
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "spectral",
+          "type": "SPECTRAL_COMPONENTS",
+          "link": 6
+        }
+      ],
+      "outputs": [
+        {
+          "name": "filtered",
+          "type": "SPECTRAL_COMPONENTS",
+          "links": [
+            9
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Hunyuan3DEmbeddingSpectralFilter"
+      },
+      "widgets_values": [
+        "band",
+        0.2,
+        0.6,
+        10.0
+      ],
+      "title": "BAND-PASS (Mid-freq)"
+    },
+    {
+      "id": 8,
+      "type": "Hunyuan3DEmbeddingSpectralRecombine",
+      "pos": [
+        1260,
+        50
+      ],
+      "size": {
+        "0": 200,
+        "1": 80
+      },
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "spectral",
+          "type": "SPECTRAL_COMPONENTS",
+          "link": 7
+        }
+      ],
+      "outputs": [
+        {
+          "name": "embedding",
+          "type": "EMBEDDING",
+          "links": [
+            13
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Hunyuan3DEmbeddingSpectralRecombine"
+      },
+      "widgets_values": [
+        false,
+        1.0
+      ]
+    },
+    {
+      "id": 9,
+      "type": "Hunyuan3DEmbeddingSpectralRecombine",
+      "pos": [
+        1260,
+        230
+      ],
+      "size": {
+        "0": 200,
+        "1": 80
+      },
+      "flags": {},
+      "order": 8,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "spectral",
+          "type": "SPECTRAL_COMPONENTS",
+          "link": 8
+        }
+      ],
+      "outputs": [
+        {
+          "name": "embedding",
+          "type": "EMBEDDING",
+          "links": [
+            14
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Hunyuan3DEmbeddingSpectralRecombine"
+      },
+      "widgets_values": [
+        false,
+        1.0
+      ]
+    },
+    {
+      "id": 10,
+      "type": "Hunyuan3DEmbeddingSpectralRecombine",
+      "pos": [
+        1260,
+        410
+      ],
+      "size": {
+        "0": 200,
+        "1": 80
+      },
+      "flags": {},
+      "order": 9,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "spectral",
+          "type": "SPECTRAL_COMPONENTS",
+          "link": 9
+        }
+      ],
+      "outputs": [
+        {
+          "name": "embedding",
+          "type": "EMBEDDING",
+          "links": [
+            15
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Hunyuan3DEmbeddingSpectralRecombine"
+      },
+      "widgets_values": [
+        false,
+        1.0
+      ]
+    },
+    {
+      "id": 11,
+      "type": "Hunyuan3DEmbeddingToMesh",
+      "pos": [
+        1510,
+        50
+      ],
+      "size": {
+        "0": 230,
+        "1": 140
+      },
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "embedding",
+          "type": "EMBEDDING",
+          "link": 13
+        },
+        {
+          "name": "pipeline",
+          "type": "HUNYUAN3D_PIPELINE",
+          "link": 10
+        }
+      ],
+      "outputs": [
+        {
+          "name": "mesh",
+          "type": "MESH",
+          "links": [
+            16
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Hunyuan3DEmbeddingToMesh"
+      },
+      "widgets_values": [
+        30,
+        7.5,
+        2025,
+        384
+      ],
+      "title": "Structure Mesh"
+    },
+    {
+      "id": 12,
+      "type": "Hunyuan3DEmbeddingToMesh",
+      "pos": [
+        1510,
+        230
+      ],
+      "size": {
+        "0": 230,
+        "1": 140
+      },
+      "flags": {},
+      "order": 11,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "embedding",
+          "type": "EMBEDDING",
+          "link": 14
+        },
+        {
+          "name": "pipeline",
+          "type": "HUNYUAN3D_PIPELINE",
+          "link": 11
+        }
+      ],
+      "outputs": [
+        {
+          "name": "mesh",
+          "type": "MESH",
+          "links": [
+            17
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Hunyuan3DEmbeddingToMesh"
+      },
+      "widgets_values": [
+        30,
+        7.5,
+        2026,
+        384
+      ],
+      "title": "Detail Mesh"
+    },
+    {
+      "id": 13,
+      "type": "Hunyuan3DEmbeddingToMesh",
+      "pos": [
+        1510,
+        410
+      ],
+      "size": {
+        "0": 230,
+        "1": 140
+      },
+      "flags": {},
+      "order": 12,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "embedding",
+          "type": "EMBEDDING",
+          "link": 15
+        },
+        {
+          "name": "pipeline",
+          "type": "HUNYUAN3D_PIPELINE",
+          "link": 12
+        }
+      ],
+      "outputs": [
+        {
+          "name": "mesh",
+          "type": "MESH",
+          "links": [
+            18
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Hunyuan3DEmbeddingToMesh"
+      },
+      "widgets_values": [
+        30,
+        7.5,
+        2027,
+        384
+      ],
+      "title": "Mid-freq Mesh"
+    },
+    {
+      "id": 14,
+      "type": "Hunyuan3DMeshExport",
+      "pos": [
+        1790,
+        50
+      ],
+      "size": {
+        "0": 180,
+        "1": 60
+      },
+      "flags": {},
+      "order": 13,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "mesh",
+          "type": "MESH",
+          "link": 16
+        }
+      ],
+      "outputs": [
+        {
+          "name": "filepath",
+          "type": "STRING",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Hunyuan3DMeshExport"
+      },
+      "widgets_values": [
+        "structure"
+      ]
+    },
+    {
+      "id": 15,
+      "type": "Hunyuan3DMeshExport",
+      "pos": [
+        1790,
+        230
+      ],
+      "size": {
+        "0": 180,
+        "1": 60
+      },
+      "flags": {},
+      "order": 14,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "mesh",
+          "type": "MESH",
+          "link": 17
+        }
+      ],
+      "outputs": [
+        {
+          "name": "filepath",
+          "type": "STRING",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Hunyuan3DMeshExport"
+      },
+      "widgets_values": [
+        "detail"
+      ]
+    },
+    {
+      "id": 16,
+      "type": "Hunyuan3DMeshExport",
+      "pos": [
+        1790,
+        410
+      ],
+      "size": {
+        "0": 180,
+        "1": 60
+      },
+      "flags": {},
+      "order": 15,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "mesh",
+          "type": "MESH",
+          "link": 18
+        }
+      ],
+      "outputs": [
+        {
+          "name": "filepath",
+          "type": "STRING",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Hunyuan3DMeshExport"
+      },
+      "widgets_values": [
+        "midfreq"
+      ]
+    }
+  ],
+  "links": [
+    [
+      1,
+      1,
+      0,
+      3,
+      0,
+      "IMAGE"
+    ],
+    [
+      2,
+      2,
+      0,
+      3,
+      1,
+      "HUNYUAN3D_PIPELINE"
+    ],
+    [
+      3,
+      3,
+      0,
+      4,
+      0,
+      "EMBEDDING"
+    ],
+    [
+      4,
+      4,
+      0,
+      5,
+      0,
+      "SPECTRAL_COMPONENTS"
+    ],
+    [
+      5,
+      4,
+      0,
+      6,
+      0,
+      "SPECTRAL_COMPONENTS"
+    ],
+    [
+      6,
+      4,
+      0,
+      7,
+      0,
+      "SPECTRAL_COMPONENTS"
+    ],
+    [
+      7,
+      5,
+      0,
+      8,
+      0,
+      "SPECTRAL_COMPONENTS"
+    ],
+    [
+      8,
+      6,
+      0,
+      9,
+      0,
+      "SPECTRAL_COMPONENTS"
+    ],
+    [
+      9,
+      7,
+      0,
+      10,
+      0,
+      "SPECTRAL_COMPONENTS"
+    ],
+    [
+      10,
+      2,
+      0,
+      11,
+      1,
+      "HUNYUAN3D_PIPELINE"
+    ],
+    [
+      11,
+      2,
+      0,
+      12,
+      1,
+      "HUNYUAN3D_PIPELINE"
+    ],
+    [
+      12,
+      2,
+      0,
+      13,
+      1,
+      "HUNYUAN3D_PIPELINE"
+    ],
+    [
+      13,
+      8,
+      0,
+      11,
+      0,
+      "EMBEDDING"
+    ],
+    [
+      14,
+      9,
+      0,
+      12,
+      0,
+      "EMBEDDING"
+    ],
+    [
+      15,
+      10,
+      0,
+      13,
+      0,
+      "EMBEDDING"
+    ],
+    [
+      16,
+      11,
+      0,
+      14,
+      0,
+      "MESH"
+    ],
+    [
+      17,
+      12,
+      0,
+      15,
+      0,
+      "MESH"
+    ],
+    [
+      18,
+      13,
+      0,
+      16,
+      0,
+      "MESH"
+    ]
+  ],
+  "groups": [
+    {
+      "title": "Spectral Frequency Decomposition",
+      "bounding": [
+        30,
+        20,
+        1960,
+        560
+      ],
+      "color": "#2f9b8a"
+    }
+  ],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.75,
+      "offset": [
+        0,
+        0
+      ]
+    },
+    "info": {
+      "title": "Spectral Frequency Filtering Demo",
+      "description": "Decomposes a single image into frequency bands using SVD:\n- HIGH-PASS: Dominant structure (large singular values)\n- LOW-PASS: Fine details/texture (small singular values)\n- BAND-PASS: Mid-frequency features\n\nEach generates a different 3D sculpture from the same source!",
+      "author": "MELTDOWN/SPECTRE"
+    }
+  },
+  "version": 0.4
+}

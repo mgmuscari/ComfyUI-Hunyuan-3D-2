@@ -1,0 +1,1244 @@
+{
+  "last_node_id": 25,
+  "last_link_id": 35,
+  "nodes": [
+    {
+      "id": 1,
+      "type": "LoadImage",
+      "pos": [
+        50,
+        50
+      ],
+      "size": {
+        "0": 250,
+        "1": 250
+      },
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            1
+          ],
+          "slot_index": 0
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null,
+          "slot_index": 1
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": [
+        "image_a.png",
+        "image"
+      ],
+      "title": "Image A"
+    },
+    {
+      "id": 2,
+      "type": "LoadImage",
+      "pos": [
+        50,
+        330
+      ],
+      "size": {
+        "0": 250,
+        "1": 250
+      },
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            2
+          ],
+          "slot_index": 0
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null,
+          "slot_index": 1
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": [
+        "image_b.png",
+        "image"
+      ],
+      "title": "Image B"
+    },
+    {
+      "id": 3,
+      "type": "LoadImage",
+      "pos": [
+        50,
+        610
+      ],
+      "size": {
+        "0": 250,
+        "1": 250
+      },
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            3
+          ],
+          "slot_index": 0
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null,
+          "slot_index": 1
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": [
+        "image_c.png",
+        "image"
+      ],
+      "title": "Image C"
+    },
+    {
+      "id": 4,
+      "type": "LoadImage",
+      "pos": [
+        50,
+        890
+      ],
+      "size": {
+        "0": 250,
+        "1": 250
+      },
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            4
+          ],
+          "slot_index": 0
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null,
+          "slot_index": 1
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": [
+        "image_d.png",
+        "image"
+      ],
+      "title": "Image D"
+    },
+    {
+      "id": 5,
+      "type": "Hunyuan3DPipelineLoader",
+      "pos": [
+        50,
+        1180
+      ],
+      "size": {
+        "0": 250,
+        "1": 58
+      },
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "pipeline",
+          "type": "HUNYUAN3D_PIPELINE",
+          "links": [
+            5,
+            6,
+            7,
+            8,
+            20,
+            25
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Hunyuan3DPipelineLoader"
+      },
+      "widgets_values": [
+        "tencent/Hunyuan3D-2.1/hunyuan3d-dit-v2-1"
+      ]
+    },
+    {
+      "id": 6,
+      "type": "Hunyuan3DEmbeddingEncode",
+      "pos": [
+        350,
+        50
+      ],
+      "size": {
+        "0": 200,
+        "1": 80
+      },
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 1
+        },
+        {
+          "name": "pipeline",
+          "type": "HUNYUAN3D_PIPELINE",
+          "link": 5
+        },
+        {
+          "name": "mask",
+          "type": "MASK",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "embedding",
+          "type": "EMBEDDING",
+          "links": [
+            9,
+            14,
+            21
+          ],
+          "slot_index": 0
+        },
+        {
+          "name": "info",
+          "type": "EMBEDDING_INFO",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Hunyuan3DEmbeddingEncode"
+      },
+      "title": "Encode A"
+    },
+    {
+      "id": 7,
+      "type": "Hunyuan3DEmbeddingEncode",
+      "pos": [
+        350,
+        330
+      ],
+      "size": {
+        "0": 200,
+        "1": 80
+      },
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 2
+        },
+        {
+          "name": "pipeline",
+          "type": "HUNYUAN3D_PIPELINE",
+          "link": 6
+        },
+        {
+          "name": "mask",
+          "type": "MASK",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "embedding",
+          "type": "EMBEDDING",
+          "links": [
+            10,
+            15,
+            22
+          ],
+          "slot_index": 0
+        },
+        {
+          "name": "info",
+          "type": "EMBEDDING_INFO",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Hunyuan3DEmbeddingEncode"
+      },
+      "title": "Encode B"
+    },
+    {
+      "id": 8,
+      "type": "Hunyuan3DEmbeddingEncode",
+      "pos": [
+        350,
+        610
+      ],
+      "size": {
+        "0": 200,
+        "1": 80
+      },
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 3
+        },
+        {
+          "name": "pipeline",
+          "type": "HUNYUAN3D_PIPELINE",
+          "link": 7
+        },
+        {
+          "name": "mask",
+          "type": "MASK",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "embedding",
+          "type": "EMBEDDING",
+          "links": [
+            11,
+            23
+          ],
+          "slot_index": 0
+        },
+        {
+          "name": "info",
+          "type": "EMBEDDING_INFO",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Hunyuan3DEmbeddingEncode"
+      },
+      "title": "Encode C"
+    },
+    {
+      "id": 9,
+      "type": "Hunyuan3DEmbeddingEncode",
+      "pos": [
+        350,
+        890
+      ],
+      "size": {
+        "0": 200,
+        "1": 80
+      },
+      "flags": {},
+      "order": 8,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 4
+        },
+        {
+          "name": "pipeline",
+          "type": "HUNYUAN3D_PIPELINE",
+          "link": 8
+        },
+        {
+          "name": "mask",
+          "type": "MASK",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "embedding",
+          "type": "EMBEDDING",
+          "links": [
+            12,
+            24
+          ],
+          "slot_index": 0
+        },
+        {
+          "name": "info",
+          "type": "EMBEDDING_INFO",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Hunyuan3DEmbeddingEncode"
+      },
+      "title": "Encode D"
+    },
+    {
+      "id": 10,
+      "type": "Hunyuan3DMultiMeltdown",
+      "pos": [
+        620,
+        50
+      ],
+      "size": {
+        "0": 280,
+        "1": 130
+      },
+      "flags": {},
+      "order": 9,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "embedding_a",
+          "type": "EMBEDDING",
+          "link": 9
+        },
+        {
+          "name": "embedding_b",
+          "type": "EMBEDDING",
+          "link": 10
+        },
+        {
+          "name": "embedding_c",
+          "type": "EMBEDDING",
+          "link": 11
+        },
+        {
+          "name": "embedding_d",
+          "type": "EMBEDDING",
+          "link": 12
+        }
+      ],
+      "outputs": [
+        {
+          "name": "meltdown",
+          "type": "EMBEDDING",
+          "links": [
+            13
+          ],
+          "slot_index": 0
+        },
+        {
+          "name": "structure_info",
+          "type": "STRING",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Hunyuan3DMultiMeltdown"
+      },
+      "widgets_values": [
+        "((A-B)-(C-D))",
+        1.0,
+        1.0
+      ],
+      "title": "4-Image Hierarchical Meltdown"
+    },
+    {
+      "id": 11,
+      "type": "Hunyuan3DEmbeddingSpectralDecompose",
+      "pos": [
+        620,
+        330
+      ],
+      "size": {
+        "0": 200,
+        "1": 60
+      },
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "embedding",
+          "type": "EMBEDDING",
+          "link": 14
+        }
+      ],
+      "outputs": [
+        {
+          "name": "spectral",
+          "type": "SPECTRAL_COMPONENTS",
+          "links": [
+            16
+          ],
+          "slot_index": 0
+        },
+        {
+          "name": "info",
+          "type": "EMBEDDING_INFO",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Hunyuan3DEmbeddingSpectralDecompose"
+      },
+      "title": "Decompose A (Structure)"
+    },
+    {
+      "id": 12,
+      "type": "Hunyuan3DEmbeddingSpectralDecompose",
+      "pos": [
+        620,
+        450
+      ],
+      "size": {
+        "0": 200,
+        "1": 60
+      },
+      "flags": {},
+      "order": 11,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "embedding",
+          "type": "EMBEDDING",
+          "link": 15
+        }
+      ],
+      "outputs": [
+        {
+          "name": "spectral",
+          "type": "SPECTRAL_COMPONENTS",
+          "links": [
+            17
+          ],
+          "slot_index": 0
+        },
+        {
+          "name": "info",
+          "type": "EMBEDDING_INFO",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Hunyuan3DEmbeddingSpectralDecompose"
+      },
+      "title": "Decompose B (Detail)"
+    },
+    {
+      "id": 13,
+      "type": "Hunyuan3DEmbeddingSpectralSplice",
+      "pos": [
+        880,
+        380
+      ],
+      "size": {
+        "0": 250,
+        "1": 110
+      },
+      "flags": {},
+      "order": 12,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "spectral_a",
+          "type": "SPECTRAL_COMPONENTS",
+          "link": 16
+        },
+        {
+          "name": "spectral_b",
+          "type": "SPECTRAL_COMPONENTS",
+          "link": 17
+        }
+      ],
+      "outputs": [
+        {
+          "name": "spliced",
+          "type": "SPECTRAL_COMPONENTS",
+          "links": [
+            18
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Hunyuan3DEmbeddingSpectralSplice"
+      },
+      "widgets_values": [
+        0.4,
+        0.15,
+        "A"
+      ],
+      "title": "Splice: Structure(A) + Detail(B)"
+    },
+    {
+      "id": 14,
+      "type": "Hunyuan3DEmbeddingSpectralRecombine",
+      "pos": [
+        1180,
+        380
+      ],
+      "size": {
+        "0": 200,
+        "1": 80
+      },
+      "flags": {},
+      "order": 13,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "spectral",
+          "type": "SPECTRAL_COMPONENTS",
+          "link": 18
+        }
+      ],
+      "outputs": [
+        {
+          "name": "embedding",
+          "type": "EMBEDDING",
+          "links": [
+            19
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Hunyuan3DEmbeddingSpectralRecombine"
+      },
+      "widgets_values": [
+        false,
+        1.0
+      ],
+      "title": "Recombine Spectral"
+    },
+    {
+      "id": 15,
+      "type": "Hunyuan3DEmbeddingMixer4",
+      "pos": [
+        620,
+        610
+      ],
+      "size": {
+        "0": 280,
+        "1": 200
+      },
+      "flags": {},
+      "order": 14,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "embedding_1",
+          "type": "EMBEDDING",
+          "link": 21
+        },
+        {
+          "name": "embedding_2",
+          "type": "EMBEDDING",
+          "link": 22
+        },
+        {
+          "name": "embedding_3",
+          "type": "EMBEDDING",
+          "link": 23
+        },
+        {
+          "name": "embedding_4",
+          "type": "EMBEDDING",
+          "link": 24
+        }
+      ],
+      "outputs": [
+        {
+          "name": "mixed",
+          "type": "EMBEDDING",
+          "links": [
+            26
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Hunyuan3DEmbeddingMixer4"
+      },
+      "widgets_values": [
+        2.0,
+        1.0,
+        0.5,
+        0.3,
+        "slerp_chain",
+        false
+      ],
+      "title": "4-Way Weighted Mixer"
+    },
+    {
+      "id": 16,
+      "type": "Hunyuan3DEmbeddingToMesh",
+      "pos": [
+        1000,
+        50
+      ],
+      "size": {
+        "0": 250,
+        "1": 140
+      },
+      "flags": {},
+      "order": 15,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "embedding",
+          "type": "EMBEDDING",
+          "link": 13
+        },
+        {
+          "name": "pipeline",
+          "type": "HUNYUAN3D_PIPELINE",
+          "link": 20
+        }
+      ],
+      "outputs": [
+        {
+          "name": "mesh",
+          "type": "MESH",
+          "links": [
+            27
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Hunyuan3DEmbeddingToMesh"
+      },
+      "widgets_values": [
+        30,
+        7.5,
+        2025,
+        384
+      ],
+      "title": "Generate Multi-Meltdown"
+    },
+    {
+      "id": 17,
+      "type": "Hunyuan3DEmbeddingToMesh",
+      "pos": [
+        1430,
+        380
+      ],
+      "size": {
+        "0": 250,
+        "1": 140
+      },
+      "flags": {},
+      "order": 16,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "embedding",
+          "type": "EMBEDDING",
+          "link": 19
+        },
+        {
+          "name": "pipeline",
+          "type": "HUNYUAN3D_PIPELINE",
+          "link": 25
+        }
+      ],
+      "outputs": [
+        {
+          "name": "mesh",
+          "type": "MESH",
+          "links": [
+            28
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Hunyuan3DEmbeddingToMesh"
+      },
+      "widgets_values": [
+        30,
+        7.5,
+        2026,
+        384
+      ],
+      "title": "Generate Spectral Splice"
+    },
+    {
+      "id": 18,
+      "type": "Hunyuan3DEmbeddingToMesh",
+      "pos": [
+        1000,
+        610
+      ],
+      "size": {
+        "0": 250,
+        "1": 140
+      },
+      "flags": {},
+      "order": 17,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "embedding",
+          "type": "EMBEDDING",
+          "link": 26
+        },
+        {
+          "name": "pipeline",
+          "type": "HUNYUAN3D_PIPELINE",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "mesh",
+          "type": "MESH",
+          "links": [
+            29
+          ],
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Hunyuan3DEmbeddingToMesh"
+      },
+      "widgets_values": [
+        30,
+        7.5,
+        2027,
+        384
+      ],
+      "title": "Generate Weighted Mix"
+    },
+    {
+      "id": 19,
+      "type": "Hunyuan3DMeshExport",
+      "pos": [
+        1300,
+        50
+      ],
+      "size": {
+        "0": 200,
+        "1": 60
+      },
+      "flags": {},
+      "order": 18,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "mesh",
+          "type": "MESH",
+          "link": 27
+        }
+      ],
+      "outputs": [
+        {
+          "name": "filepath",
+          "type": "STRING",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Hunyuan3DMeshExport"
+      },
+      "widgets_values": [
+        "multi_meltdown"
+      ]
+    },
+    {
+      "id": 20,
+      "type": "Hunyuan3DMeshExport",
+      "pos": [
+        1730,
+        380
+      ],
+      "size": {
+        "0": 200,
+        "1": 60
+      },
+      "flags": {},
+      "order": 19,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "mesh",
+          "type": "MESH",
+          "link": 28
+        }
+      ],
+      "outputs": [
+        {
+          "name": "filepath",
+          "type": "STRING",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Hunyuan3DMeshExport"
+      },
+      "widgets_values": [
+        "spectral_splice"
+      ]
+    },
+    {
+      "id": 21,
+      "type": "Hunyuan3DMeshExport",
+      "pos": [
+        1300,
+        610
+      ],
+      "size": {
+        "0": 200,
+        "1": 60
+      },
+      "flags": {},
+      "order": 20,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "mesh",
+          "type": "MESH",
+          "link": 29
+        }
+      ],
+      "outputs": [
+        {
+          "name": "filepath",
+          "type": "STRING",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Hunyuan3DMeshExport"
+      },
+      "widgets_values": [
+        "weighted_mix"
+      ]
+    }
+  ],
+  "links": [
+    [
+      1,
+      1,
+      0,
+      6,
+      0,
+      "IMAGE"
+    ],
+    [
+      2,
+      2,
+      0,
+      7,
+      0,
+      "IMAGE"
+    ],
+    [
+      3,
+      3,
+      0,
+      8,
+      0,
+      "IMAGE"
+    ],
+    [
+      4,
+      4,
+      0,
+      9,
+      0,
+      "IMAGE"
+    ],
+    [
+      5,
+      5,
+      0,
+      6,
+      1,
+      "HUNYUAN3D_PIPELINE"
+    ],
+    [
+      6,
+      5,
+      0,
+      7,
+      1,
+      "HUNYUAN3D_PIPELINE"
+    ],
+    [
+      7,
+      5,
+      0,
+      8,
+      1,
+      "HUNYUAN3D_PIPELINE"
+    ],
+    [
+      8,
+      5,
+      0,
+      9,
+      1,
+      "HUNYUAN3D_PIPELINE"
+    ],
+    [
+      9,
+      6,
+      0,
+      10,
+      0,
+      "EMBEDDING"
+    ],
+    [
+      10,
+      7,
+      0,
+      10,
+      1,
+      "EMBEDDING"
+    ],
+    [
+      11,
+      8,
+      0,
+      10,
+      2,
+      "EMBEDDING"
+    ],
+    [
+      12,
+      9,
+      0,
+      10,
+      3,
+      "EMBEDDING"
+    ],
+    [
+      13,
+      10,
+      0,
+      16,
+      0,
+      "EMBEDDING"
+    ],
+    [
+      14,
+      6,
+      0,
+      11,
+      0,
+      "EMBEDDING"
+    ],
+    [
+      15,
+      7,
+      0,
+      12,
+      0,
+      "EMBEDDING"
+    ],
+    [
+      16,
+      11,
+      0,
+      13,
+      0,
+      "SPECTRAL_COMPONENTS"
+    ],
+    [
+      17,
+      12,
+      0,
+      13,
+      1,
+      "SPECTRAL_COMPONENTS"
+    ],
+    [
+      18,
+      13,
+      0,
+      14,
+      0,
+      "SPECTRAL_COMPONENTS"
+    ],
+    [
+      19,
+      14,
+      0,
+      17,
+      0,
+      "EMBEDDING"
+    ],
+    [
+      20,
+      5,
+      0,
+      16,
+      1,
+      "HUNYUAN3D_PIPELINE"
+    ],
+    [
+      21,
+      6,
+      0,
+      15,
+      0,
+      "EMBEDDING"
+    ],
+    [
+      22,
+      7,
+      0,
+      15,
+      1,
+      "EMBEDDING"
+    ],
+    [
+      23,
+      8,
+      0,
+      15,
+      2,
+      "EMBEDDING"
+    ],
+    [
+      24,
+      9,
+      0,
+      15,
+      3,
+      "EMBEDDING"
+    ],
+    [
+      25,
+      5,
+      0,
+      17,
+      1,
+      "HUNYUAN3D_PIPELINE"
+    ],
+    [
+      26,
+      15,
+      0,
+      18,
+      0,
+      "EMBEDDING"
+    ],
+    [
+      27,
+      16,
+      0,
+      19,
+      0,
+      "MESH"
+    ],
+    [
+      28,
+      17,
+      0,
+      20,
+      0,
+      "MESH"
+    ],
+    [
+      29,
+      18,
+      0,
+      21,
+      0,
+      "MESH"
+    ]
+  ],
+  "groups": [
+    {
+      "title": "Source Images (4)",
+      "bounding": [
+        30,
+        20,
+        290,
+        1230
+      ],
+      "color": "#3f789e"
+    },
+    {
+      "title": "Encode Embeddings",
+      "bounding": [
+        330,
+        20,
+        240,
+        980
+      ],
+      "color": "#8AA62F"
+    },
+    {
+      "title": "Multi-Meltdown: ((A-B)-(C-D))",
+      "bounding": [
+        600,
+        20,
+        720,
+        200
+      ],
+      "color": "#a1309b"
+    },
+    {
+      "title": "Spectral Splice: Structure(A) + Detail(B)",
+      "bounding": [
+        600,
+        300,
+        1360,
+        230
+      ],
+      "color": "#2f9b8a"
+    },
+    {
+      "title": "4-Way Weighted Mix",
+      "bounding": [
+        600,
+        580,
+        720,
+        240
+      ],
+      "color": "#9b5c2f"
+    }
+  ],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.7,
+      "offset": [
+        0,
+        0
+      ]
+    },
+    "info": {
+      "title": "Multi-Image Embedding Algebra Demo",
+      "description": "Demonstrates 3 different multi-image composition techniques:\n1. Hierarchical Meltdown: ((A-B)-(C-D))\n2. Spectral Splice: Structure from A + Detail from B\n3. 4-Way Weighted Mix: Configurable blend of all images",
+      "author": "MELTDOWN/SPECTRE"
+    }
+  },
+  "version": 0.4
+}
